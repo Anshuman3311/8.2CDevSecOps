@@ -1,4 +1,5 @@
-pipeline {
+# Jenkins CI integration demonstration.
+    pipeline {
     agent any
 
     environment {
