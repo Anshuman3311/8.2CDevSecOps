@@ -43,7 +43,7 @@ pipeline {
                         set -e
 
                         SCANNER_VERSION="8.0.1"
-                        SCANNER_NAME="sonar-scanner-${SCANNER_VERSION}-macosx-aarch64"
+                        SCANNER_NAME="sonar-scanner-cli-${SCANNER_VERSION}-macos-aarch64"
                         SCANNER_ZIP="${SCANNER_NAME}.zip"
                         SCANNER_URL="https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/${SCANNER_ZIP}"
 
