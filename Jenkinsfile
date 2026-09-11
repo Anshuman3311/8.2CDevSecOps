@@ -6,9 +6,11 @@ pipeline {
     }
 
     stages {
+
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/Anshuman3311/8.2CDevSecOps.git'
+                git branch: 'main',
+                    url: 'https://github.com/Anshuman3311/8.2CDevSecOps.git'
             }
         }
 
@@ -38,24 +40,22 @@ pipeline {
 
         stage('SonarCloud Analysis') {
             steps {
-                withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
+                withCredentials([
+                    string(
+                        credentialsId: 'SONAR_TOKEN',
+                        variable: 'SONAR_TOKEN'
+                    )
+                ]) {
                     sh '''
                         set -e
 
-                        SCANNER_VERSION="8.0.1"
-                        SCANNER_NAME="sonar-scanner-cli-${SCANNER_VERSION}-macos-aarch64"
-                        SCANNER_ZIP="${SCANNER_NAME}.zip"
-                        SCANNER_URL="https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/${SCANNER_ZIP}"
+                        echo "Checking SonarScanner installation..."
+                        which sonar-scanner
+                        sonar-scanner --version
 
-                        echo "Downloading SonarScanner CLI ${SCANNER_VERSION}..."
-                        curl -fL -o "${WORKSPACE}/${SCANNER_ZIP}" "${SCANNER_URL}"
+                        echo "Starting SonarCloud analysis..."
 
-                        echo "Extracting SonarScanner..."
-                        rm -rf "${WORKSPACE}/${SCANNER_NAME}"
-                        unzip -q "${WORKSPACE}/${SCANNER_ZIP}" -d "${WORKSPACE}"
-
-                        echo "Running SonarCloud analysis..."
-                        "${WORKSPACE}/${SCANNER_NAME}/bin/sonar-scanner"
+                        sonar-scanner
                     '''
                 }
             }
